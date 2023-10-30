@@ -78,11 +78,21 @@ async function run() {
         if(req.query?.email){
             query = {email: req.query.email}
         }
-        const result = await bookingCollection.find().toArray()
+        const result = await bookingCollection.find(query).toArray()
         res.send(result)
     })
 
     // Booking Data Get End {{{{{{{   Get   }}}}}}}
+
+
+    // Booking Data Delete Start   {{{{{{   DELETE   }}}}}}
+    app.delete('/booking/:id', async (req, res) => {
+        const id = req.params.id
+        const query = {_id: new ObjectId(id)}
+        const result = await bookingCollection.deleteOne(query)
+        res.send(result)
+    })
+    // Booking Data Delete End   {{{{{{   DELETE   }}}}}}
 
 
 
@@ -95,7 +105,7 @@ async function run() {
 
         const options = {
             // Include only the `title` and `imdb` fields in the returned document
-            projection: { title: 1, service_id: 1, img: 1, price: 1 },
+            projection: { title: 1, service_id: 1, img: 1, price: 1, img: 1 },
           };
 
         // Options End
